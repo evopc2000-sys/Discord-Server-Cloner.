@@ -38,7 +38,7 @@ def send_email(to_email: str, subject: str, body: str):
 users_db = {
     "admin": {
         "password": "admin123",
-        "email": "admin@nexus.com",
+        "email": "admin@lagoudass.com",
         "verified": True
     }
 }
@@ -120,7 +120,7 @@ def signup_request(data: SignupModel):
         "expires_at": expires_at
     }
     
-    send_email(data.email, "Nexus Services - Verification Code", f"Ο 6-ψήφιος κωδικός επαλήθευσης είναι: <b>{otp}</b>")
+    send_email(data.email, "Lagoudass Services - Verification Code", f"Ο 6-ψήφιος κωδικός επαλήθευσης είναι: <b>{otp}</b>")
     print(f"\n[DEV MODE] OTP for {data.username}: {otp}\n")
     return {"status": "ok"}
 
@@ -159,7 +159,7 @@ def login_request(data: LoginRequestModel):
         "expires_at": expires_at
     }
     
-    send_email(user["email"], "Nexus Services - Login OTP", f"Ο κωδικός επιβεβαίωσης εισόδου είναι: <b>{otp}</b>")
+    send_email(user["email"], "Lagoudass Services - Login OTP", f"Ο κωδικός επιβεβαίωσης εισόδου είναι: <b>{otp}</b>")
     print(f"\n[DEV MODE] Login OTP for {data.username}: {otp}\n")
     return {"status": "ok"}
 
@@ -201,7 +201,7 @@ def forgot_password(data: ForgotPasswordModel):
     }
     
     reset_link = f"http://127.0.0.1:8000/reset-password.html?token={token}"
-    send_email(data.email, "Nexus Services - Reset Password", f"Πάτα στον σύνδεσμο για αλλαγή κωδικού: <a href='{reset_link}'>{reset_link}</a>")
+    send_email(data.email, "Lagoudass Services - Reset Password", f"Πάτα στον σύνδεσμο για αλλαγή κωδικού: <a href='{reset_link}'>{reset_link}</a>")
     print(f"\n[DEV MODE] Reset Link: {reset_link}\n")
     
     return {"status": "ok", "message": "Check your email."}

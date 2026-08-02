@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagoudass Services - Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <nav class="navbar">
+        <div class="logo"><i class="fa-solid fa-bolt"></i> LAGOUDASS</div>
+        <div class="nav-right">
+            <div id="authButtons">
+                <button class="btn btn-secondary" id="openLoginBtn">Login</button>
+                <button class="btn btn-primary" id="openSignupBtn">Sign Up</button>
+            </div>
+            <div id="userProfile" class="hidden">
+                <span id="navUsername">User</span>
+                <button class="chat-bubble-btn hidden" id="openChatBtn" title="Συνομιλία">
+                    <i class="fa-solid fa-comments"></i>
+                    <span class="badge-dot hidden" id="chatBadge"></span>
+                </button>
+                <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="declineBanner" class="decline-banner hidden">
+        <i class="fa-solid fa-circle-xmark"></i>
+        <div>
+            <strong>Η παραγγελία σου απορρίφθηκε!</strong>
+            <p id="declineReasonText">Αιτία: -</p>
+        </div>
+        <button id="closeBannerBtn">&times;</button>
+    </div>
+
+    <section class="hero">
+        <div class="badge"><i class="fa-solid fa-shield-halved"></i> Paysafe Orders System</div>
+        <h1>Αγοράστε Discord Services με <span>Paysafe</span></h1>
+        <p>Επιλέξτε πακέτο, εισάγετε το 16-ψήφιο PIN σας και συνομιλήστε απευθείας μαζί μας.</p>
+    </section>
+
+    <section class="services-container">
+        <div class="grid">
+            <div class="service-card">
+                <h3>Server Setup Basic</h3>
+                <p>Πλήρες στήσιμο καναλιών, ρόλων, δικαιωμάτων & βασικών bots.</p>
+                <div class="price">15.00€</div>
+                <button class="btn btn-primary buy-btn" data-title="Server Setup Basic" data-price="15.00">Αγορά με Paysafe</button>
+            </div>
+            
+            <div class="service-card featured">
+                <div class="featured-tag">POPULAR</div>
+                <h3>Custom Discord Bot</h3>
+                <p>Αποκλειστικό bot σε Python (discord.py) με slash commands & custom views.</p>
+                <div class="price">30.00€</div>
+                <button class="btn btn-primary buy-btn" data-title="Custom Discord Bot" data-price="30.00">Αγορά με Paysafe</button>
+            </div>
+
+            <div class="service-card">
+                <h3>Full Community Pack</h3>
+                <p>Ολοκληρωμένο πακέτο για μεγάλα Discord communities & Roleplay servers.</p>
+                <div class="price">55.00€</div>
+                <button class="btn btn-primary buy-btn" data-title="Full Community Pack" data-price="55.00">Αγορά με Paysafe</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="adminPanel" class="admin-section hidden">
+        <h2><i class="fa-solid fa-user-shield"></i> Admin Dashboard (Νέες Παραγγελίες)</h2>
+        <div id="ordersList" class="orders-list"></div>
+    </section>
+
+    <!-- AUTH MODAL -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-window">
+            <button class="modal-close" id="closeAuthModalBtn">&times;</button>
+            <h3 id="authModalTitle">Login</h3>
+            
+            <div id="authStep1">
+                <div class="input-group" style="margin-top: 15px;">
+                    <label for="authUsername">Username</label>
+                    <input type="text" id="authUsername" required>
+                </div>
+                <div class="input-group hidden" id="emailGroup">
+                    <label for="authEmail">Email</label>
+                    <input type="email" id="authEmail">
+                </div>
+                <div class="input-group">
+                    <label for="authPassword">Password</label>
+                    <input type="password" id="authPassword" required>
+                </div>
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <a href="#" id="forgotPasswordLink" style="color: var(--accent-blurple); font-size: 0.8rem; text-decoration: none;">Forgot Password?</a>
+                </div>
+                <button class="btn btn-primary btn-full" id="authSubmitBtn">Συνέχεια</button>
+            </div>
+
+            <div id="authStep2" class="hidden">
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 10px;">Στάλθηκε 6-ψήφιος κωδικός στο email σου (Λήγει σε 15 λεπτά).</p>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label for="otpInput">6-ψήφιος Κωδικός (OTP)</label>
+                    <input type="text" id="otpInput" maxlength="6" placeholder="123456" style="text-align: center; letter-spacing: 4px; font-size: 1.2rem;" required>
+                </div>
+                <button class="btn btn-primary btn-full" id="verifyOtpBtn">Επαλήθευση</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div class="modal-overlay" id="forgotModal">
+        <div class="modal-window">
+            <button class="modal-close" id="closeForgotModalBtn">&times;</button>
+            <h3>Forgot Password</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 10px;">Εισάγετε το email που έχετε καταχωρίσει στο account σας.</p>
+            <div class="input-group" style="margin-top: 15px;">
+                <label for="forgotEmail">Email</label>
+                <input type="email" id="forgotEmail" placeholder="your@email.com" required>
+            </div>
+            <button class="btn btn-primary btn-full" id="submitForgotBtn">Send Reset Link</button>
+        </div>
+    </div>
+
+    <!-- PAYSAFE CHECKOUT MODAL -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-window">
+            <button class="modal-close" id="closeOrderModalBtn">&times;</button>
+            <h3>Πληρωμή με Paysafe</h3>
+            <p id="orderModalTitle" style="color: var(--accent-blurple); margin-bottom: 15px;">Πακέτο: -</p>
+            <div class="input-group">
+                <label for="orderDiscordUser">Discord Username / ID</label>
+                <input type="text" id="orderDiscordUser" placeholder="π.χ. user#0000" required>
+            </div>
+            <div class="input-group">
+                <label for="paysafePin">16-ψήφιος Κωδικός Paysafe (PIN)</label>
+                <input type="text" id="paysafePin" maxlength="16" placeholder="0000-0000-0000-0000" required>
+            </div>
+            <button class="btn btn-primary btn-full" id="submitOrderBtn"><i class="fa-solid fa-lock"></i> Υποβολή Παραγγελίας</button>
+        </div>
+    </div>
+
+    <!-- DECLINE MODAL -->
+    <div class="modal-overlay" id="declineModal">
+        <div class="modal-window">
+            <button class="modal-close" id="closeDeclineModalBtn">&times;</button>
+            <h3>Απόρριψη Παραγγελίας</h3>
+            <div class="input-group" style="margin-top: 15px;">
+                <label for="declineReasonInput">Αιτία Απόρριψης</label>
+                <textarea id="declineReasonInput" rows="3" placeholder="π.χ. Ο κωδικός Paysafe είναι άκυρος."></textarea>
+            </div>
+            <button class="btn btn-danger btn-full" id="confirmDeclineBtn">Aπόρριψη & Αποστολή Reason</button>
+        </div>
+    </div>
+
+    <!-- CHAT MODAL -->
+    <div class="modal-overlay" id="chatModal">
+        <div class="modal-window chat-window">
+            <div class="chat-header">
+                <h3><i class="fa-solid fa-comments"></i> Live Chat Παραγγελίας</h3>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="btn btn-danger btn-sm hidden" id="closeOrderBtn">Close Order</button>
+                    <button class="modal-close" id="closeChatModalBtn" style="position: static;">&times;</button>
+                </div>
+            </div>
+            <div class="chat-body" id="chatMessages"></div>
+            <div class="chat-footer">
+                <input type="text" id="chatInput" placeholder="Γράψτε μήνυμα...">
+                <button class="btn btn-primary" id="sendMsgBtn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Lagoudass Services. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
